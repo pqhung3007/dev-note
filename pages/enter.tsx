@@ -96,7 +96,7 @@ function UsernameForm() {
     }
   };
 
-  return (
+  return !username ? (
     <div className="flex justify-center">
       <div className="w-full max-w-md">
         <form onSubmit={handleSubmit}>
@@ -130,7 +130,7 @@ function UsernameForm() {
         </form>
       </div>
     </div>
-  );
+  ) : null;
 }
 
 function UsernameMessage({ username, isValid, loading }) {
