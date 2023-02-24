@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 import logo from "../public/assets/logo.png";
-import avatar from "../public/assets/mock_avatar.png";
+import avatar from "../public/assets/avatar.jpg";
 
 import { UserContext } from "../lib/context";
 import { auth } from "../lib/firebase";
