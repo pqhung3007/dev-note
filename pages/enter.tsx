@@ -36,6 +36,8 @@ function UsernameForm() {
   const [isValid, setIsValid] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const { user, username } = useContext(UserContext);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value.toLowerCase();
     /* the username regex matches string that satisfies the following conditions:
@@ -73,36 +75,59 @@ function UsernameForm() {
     checkUsername(formValue);
   }, [formValue, checkUsername]);
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const userDoc = db.doc(`users/${user.uid}`);
+      const usernameDoc = db.doc(`usernames/${formValue}`);
+
+      // commit to batch write
+      const batch = db.batch();
+      batch.set(userDoc, {
+        username: formValue,
+        photoURL: user.photoURL,
+        displayName: user.displayName,
+      });
+      batch.set(usernameDoc, { uid: user.uid });
+
+      await batch.commit();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-md">
-        <label
-          htmlFor="success"
-          className="mb-2 block text-lg font-medium text-gray-700 "
-        >
-          Your username
-        </label>
-        <input
-          type="text"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm text-gray-700 focus:border-blue-500 focus:ring-blue-500"
-          value={formValue}
-          placeholder="e.g: username1234"
-          onChange={handleChange}
-        />
+        <form onSubmit={handleSubmit}>
+          <label
+            htmlFor="success"
+            className="mb-2 block text-lg font-medium text-gray-700 "
+          >
+            Your username
+          </label>
+          <input
+            type="text"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm text-gray-700 focus:border-blue-500 focus:ring-blue-500"
+            value={formValue}
+            placeholder="e.g: username1234"
+            onChange={handleChange}
+          />
 
-        <UsernameMessage
-          username={formValue}
-          isValid={isValid}
-          loading={loading}
-        />
+          <UsernameMessage
+            username={formValue}
+            isValid={isValid}
+            loading={loading}
+          />
 
-        <button
-          type="submit"
-          className="mt-4 block w-full rounded-lg border border-gray-300 bg-blue-600 p-3 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
-          disabled={!isValid}
-        >
-          Choose
-        </button>
+          <button
+            type="submit"
+            className="mt-4 block w-full rounded-lg border border-gray-300 bg-blue-600 p-3 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={!isValid}
+          >
+            Choose
+          </button>
+        </form>
       </div>
     </div>
   );
