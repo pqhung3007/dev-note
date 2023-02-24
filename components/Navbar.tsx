@@ -55,11 +55,11 @@ export default function Navbar() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 z-10 mt-4 w-40 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute right-0 z-10 mt-4 w-40 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <Menu.Item>
                       <Link
                         href={`/${username}`}
-                        className="inline-flex items-center px-4 py-2 text-sm text-gray-700"
+                        className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                       >
                         <UserIcon className="mr-2 h-5 w-5 text-gray-500" />
                         Your account
@@ -68,7 +68,7 @@ export default function Navbar() {
                     <Menu.Item>
                       <Link
                         href={`/${username}`}
-                        className="inline-flex items-center px-4 py-2 text-sm text-gray-700"
+                        className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                       >
                         <ArrowRightOnRectangleIcon className="mr-2 h-5 w-5 text-gray-500" />
                         Sign out
