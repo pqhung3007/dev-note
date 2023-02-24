@@ -1,24 +1,13 @@
 import Image from "next/image";
-const { auth, googleAuthProvider } = require("../lib/firebase");
+import { useContext } from "react";
+import { UserContext } from "../lib/context";
+import { auth, googleAuthProvider } from "../lib/firebase";
 import google from "../public/assets/google.png";
 
 export default function Enter(props) {
-  const user = null;
-  const username = null;
+  const { user, username } = useContext(UserContext);
 
-  return (
-    <main>
-      {user ? (
-        !username ? (
-          <UsernameForm />
-        ) : (
-          <SignOutButton />
-        )
-      ) : (
-        <SignInButton />
-      )}
-    </main>
-  );
+  return <main>{!user ? <SignInButton /> : null}</main>;
 }
 
 function SignInButton() {
@@ -35,12 +24,4 @@ function SignInButton() {
       Sign in with Google
     </button>
   );
-}
-
-function SignOutButton() {
-  return null;
-}
-
-function UsernameForm() {
-  return null;
 }

@@ -1,12 +1,18 @@
 import "../styles/globals.css";
 import Navbar from "../components/Navbar";
+import { UserContext } from "../lib/context";
+import { useUserData } from "../hooks/useUserData";
 
 function MyApp({ Component, pageProps }) {
+  const userData = useUserData();
+
   return (
-    <>
-      <Navbar />
-      <Component {...pageProps} />
-    </>
+    <UserContext.Provider value={userData}>
+      <>
+        <Navbar />
+        <Component {...pageProps} />
+      </>
+    </UserContext.Provider>
   );
 }
 

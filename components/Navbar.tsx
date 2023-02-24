@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Fragment } from "react";
+import { useRouter } from "next/router";
+import { Fragment, useContext } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
   UserIcon,
@@ -10,9 +11,18 @@ import {
 import logo from "../public/assets/logo.png";
 import avatar from "../public/assets/mock_avatar.png";
 
+import { UserContext } from "../lib/context";
+import { auth } from "../lib/firebase";
+
 export default function Navbar() {
-  const user = null;
-  const username = null;
+  const { user, username } = useContext(UserContext);
+
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    auth.signOut();
+    router.reload();
+  };
 
   return (
     <div className="bg-white">
@@ -22,13 +32,7 @@ export default function Navbar() {
             <Image src={logo} alt="logo" className="h-20 w-auto" />
           </Link>
 
-          {username ? (
-            <Link href="/enter">
-              <button className="rounded-md bg-blue-600 px-4 py-3 text-sm font-medium text-white shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                Register now
-              </button>
-            </Link>
-          ) : (
+          {user ? (
             <div className="flex items-center">
               <Link href="/admin" className="mr-4">
                 <button className="rounded-md bg-blue-600 px-4 py-3 text-sm font-medium text-white shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
@@ -57,6 +61,9 @@ export default function Navbar() {
                 >
                   <Menu.Items className="absolute right-0 z-10 mt-4 w-40 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <Menu.Item>
+                      <h3>Welcome back, {username}</h3>
+                    </Menu.Item>
+                    <Menu.Item>
                       <Link
                         href={`/${username}`}
                         className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
@@ -66,19 +73,24 @@ export default function Navbar() {
                       </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Link
-                        href={`/${username}`}
+                      <button
                         className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        onClick={handleSignOut}
                       >
                         <ArrowRightOnRectangleIcon className="mr-2 h-5 w-5 text-gray-500" />
                         Sign out
-                      </Link>
+                      </button>
                     </Menu.Item>
                   </Menu.Items>
                 </Transition>
               </Menu>
-              <Link href={`/${username}`}></Link>
             </div>
+          ) : (
+            <Link href="/enter">
+              <button className="rounded-md bg-blue-600 px-4 py-3 text-sm font-medium text-white shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Register now
+              </button>
+            </Link>
           )}
         </div>
       </nav>
