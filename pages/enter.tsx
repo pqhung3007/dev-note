@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import { UserContext } from "../lib/context";
+import debounce from "lodash.debounce";
 import { auth, googleAuthProvider, db } from "../lib/firebase";
 import google from "../public/assets/google.png";
 
@@ -55,19 +56,22 @@ function UsernameForm() {
     }
   };
 
+  // wait for user to stop typing for 500ms before checking username availability
+  const checkUsername = useCallback(
+    debounce(async (username: string) => {
+      if (username.length >= 3) {
+        const ref = db.doc(`usernames/${username}`);
+        const { exists } = await ref.get();
+        setIsValid(!exists);
+        setLoading(false);
+      }
+    }, 500),
+    []
+  );
+
   useEffect(() => {
     checkUsername(formValue);
-  }, [formValue]);
-
-  const checkUsername = async (username: string) => {
-    if (username.length >= 3) {
-      const ref = db.doc(`usernames/${username}`);
-      const { exists } = await ref.get();
-      console.log("Firestore read executed");
-      setIsValid(!exists);
-      setLoading(false);
-    }
-  };
+  }, [formValue, checkUsername]);
 
   return (
     <div className="flex justify-center">
