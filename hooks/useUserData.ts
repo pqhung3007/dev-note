@@ -5,7 +5,6 @@ import { auth, db } from "../lib/firebase";
 export function useUserData() {
   const [user] = useAuthState(auth);
   const [username, setUsername] = useState(null);
-  console.log(user);
 
   // listen to real-time update
   useEffect(() => {
@@ -15,8 +14,6 @@ export function useUserData() {
       const ref = db.collection("users").doc(user.uid);
 
       subscriber = ref.onSnapshot((doc) => {
-        console.log(doc.data());
-
         setUsername(doc.data()?.username);
       });
     } else {
