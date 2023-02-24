@@ -44,9 +44,12 @@ export default function Navbar() {
               <Menu as="div" className="relative">
                 <Menu.Button className="flex items-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
                   <Image
-                    src={avatar}
+                    src={user.photoURL || avatar}
+                    loader={() => user.photoURL}
                     alt="user photo"
                     className="h-10 w-10 rounded-full object-cover"
+                    width={40}
+                    height={40}
                   />
                 </Menu.Button>
 
@@ -59,28 +62,35 @@ export default function Navbar() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 z-10 mt-4 w-40 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <Menu.Item>
-                      <h3>Welcome back, {username}</h3>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <Link
-                        href={`/${username}`}
-                        className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                      >
-                        <UserIcon className="mr-2 h-5 w-5 text-gray-500" />
-                        Your account
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <button
-                        className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                        onClick={handleSignOut}
-                      >
-                        <ArrowRightOnRectangleIcon className="mr-2 h-5 w-5 text-gray-500" />
-                        Sign out
-                      </button>
-                    </Menu.Item>
+                  <Menu.Items className="absolute right-0 z-10 mt-4 w-40 origin-top-right divide-y divide-gray-200 rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                      <Menu.Item>
+                        <h3 className="inline-flex w-full items-center px-4 py-2 font-medium text-gray-700">
+                          Hello, {username} 👋
+                        </h3>
+                      </Menu.Item>
+                    </div>
+
+                    <div className="py-1">
+                      <Menu.Item>
+                        <Link
+                          href={`/${username}`}
+                          className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        >
+                          <UserIcon className="mr-2 h-5 w-5 text-gray-500" />
+                          Your account
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <button
+                          className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                          onClick={handleSignOut}
+                        >
+                          <ArrowRightOnRectangleIcon className="mr-2 h-5 w-5 text-gray-500" />
+                          Sign out
+                        </button>
+                      </Menu.Item>
+                    </div>
                   </Menu.Items>
                 </Transition>
               </Menu>
