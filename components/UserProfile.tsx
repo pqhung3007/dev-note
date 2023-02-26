@@ -20,6 +20,7 @@ export default function UserProfile({
         className="h-20 w-20 rounded-full object-cover"
         width={48}
         height={48}
+        referrerPolicy="no-referrer"
       />
       <p>{username}</p>
       <h1>{displayName}</h1>
