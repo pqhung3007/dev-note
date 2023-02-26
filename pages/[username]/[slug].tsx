@@ -3,24 +3,30 @@ import { db, getUserWithUsername, postToJSON } from "../../lib/firebase";
 
 import PostContent from "../../components/PostContent";
 import MetaTags from "../../components/MetaTags";
+import * as firebase from "firebase/firebase-firestore";
+import "firebase/auth";
+import "firebase/firestore";
 
-interface MyPost {
-  content: string;
-  slug: string;
-  uid: string;
-  published: boolean;
-  createdAt: number;
-  updatedAt: number;
-  username: string;
-  heartCount: number;
-}
+// interface MyPost {
+//   content: string;
+//   slug: string;
+//   uid: string;
+//   published: boolean;
+//   createdAt: number;
+//   updatedAt: number;
+//   username: string;
+//   heartCount: number;
+// }
 
 export default function Post({ post, path }) {
+  const postRef = db.doc(path) as firebase.firestore.DocumentReference;
+  const [realtimePost] = useDocumentData(postRef);
+  const renderedPost = realtimePost || post;
   return (
     <main>
       <MetaTags title={post.title} description={post.content} />
       <section>
-        <PostContent post={post} />
+        <PostContent post={renderedPost} />
       </section>
 
       <aside className="card">
