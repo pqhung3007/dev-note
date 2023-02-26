@@ -3,6 +3,7 @@ import { db, fromMillis, postToJSON } from "../lib/firebase";
 
 import Loader from "../components/Loader";
 import PostFeed from "../components/PostFeed";
+import MetaTags from "../components/MetaTags";
 
 // max post to query per page
 const LIMIT = 1;
@@ -41,6 +42,10 @@ export default function Home({ posts }) {
 
   return (
     <main>
+      <MetaTags
+        title="Home Page"
+        description="Get the latest posts on our site"
+      />
       <PostFeed posts={posts} />
       <Loader show={loading} />
 

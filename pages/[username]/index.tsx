@@ -1,10 +1,15 @@
 import UserProfile from "../../components/UserProfile";
 import PostFeed from "../../components/PostFeed";
+import MetaTags from "../../components/MetaTags";
 import { getUserWithUsername, postToJSON } from "../../lib/firebase";
 
 export default function UserProfilePage({ user, posts }) {
   return (
     <main>
+      <MetaTags
+        title={user.username}
+        description={`${user.username}'s public profile`}
+      />
       <UserProfile {...user} />
       <PostFeed posts={posts} />
     </main>

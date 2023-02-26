@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { useState, useEffect, useContext, useCallback } from "react";
-import { UserContext } from "../lib/context";
 import debounce from "lodash.debounce";
+import { UserContext } from "../lib/context";
 import { auth, googleAuthProvider, db } from "../lib/firebase";
+
+import MetaTags from "../components/MetaTags";
 import google from "../public/assets/google.png";
 
 export default function Enter() {
@@ -10,6 +12,7 @@ export default function Enter() {
 
   return (
     <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <MetaTags title="Enter" description="Let's try this amazing app" />
       {user ? !username ? <UsernameForm /> : null : <SignInButton />}
     </main>
   );

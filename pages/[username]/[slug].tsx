@@ -1,5 +1,8 @@
+import { useDocumentData } from "react-firebase-hooks/firestore";
 import { db, getUserWithUsername, postToJSON } from "../../lib/firebase";
+
 import PostContent from "../../components/PostContent";
+import MetaTags from "../../components/MetaTags";
 
 interface MyPost {
   content: string;
@@ -12,9 +15,10 @@ interface MyPost {
   heartCount: number;
 }
 
-export default function Post({ post }) {
+export default function Post({ post, path }) {
   return (
     <main>
+      <MetaTags title={post.title} description={post.content} />
       <section>
         <PostContent post={post} />
       </section>
@@ -33,14 +37,16 @@ export async function getStaticProps({ params }) {
   const userDoc = await getUserWithUsername(username);
 
   let post;
+  let path;
 
   if (userDoc) {
     const postRef = userDoc.ref.collection("posts").doc(slug);
     post = postToJSON(await postRef.get());
+    path = postRef.path;
   }
 
   return {
-    props: { post },
+    props: { post, path },
     // regenerate post page on request after 5 seconds
     revalidate: 100,
   };
