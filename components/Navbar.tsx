@@ -44,7 +44,7 @@ export default function Navbar() {
               <Menu as="div" className="relative">
                 <Menu.Button className="flex items-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
                   <Image
-                    src={user.photoURL || avatar}
+                    src={user.photoURL}
                     loader={() => user.photoURL}
                     alt="user photo"
                     className="h-10 w-10 rounded-full object-cover"
