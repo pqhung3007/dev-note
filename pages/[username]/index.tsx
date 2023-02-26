@@ -18,6 +18,7 @@ export async function getServerSideProps({ query }) {
   // JSON serializable data
   let user = null;
   let posts = null;
+
   if (userDoc) {
     user = userDoc.data();
     const postsQuery = userDoc.ref
