@@ -30,7 +30,7 @@ export async function getUserWithUsername(username: string) {
   return userDoc;
 }
 
-export async function postToJSON(doc: any) {
+export function postToJSON(doc: any) {
   const data = doc.data();
   return {
     ...data,
@@ -38,3 +38,5 @@ export async function postToJSON(doc: any) {
     updatedAt: data.updatedAt.toMillis(),
   };
 }
+
+export const fromMillis = firebase.firestore.Timestamp.fromMillis;
