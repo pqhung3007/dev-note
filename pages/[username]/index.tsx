@@ -14,8 +14,8 @@ export default function UserProfilePage({ user, posts }) {
 export async function getServerSideProps({ query }) {
   const { username } = query;
   const userDoc = await getUserWithUsername(username);
+  console.log(userDoc);
 
-  // JSON serializable data
   let user = null;
   let posts = null;
 
@@ -26,10 +26,14 @@ export async function getServerSideProps({ query }) {
       .where("published", "==", true)
       .orderBy("createdAt", "desc")
       .limit(5);
-
-    // await function returns a promise whose type is JSON serializable
     posts = (await postsQuery.get()).docs.map(postToJSON);
+  } else {
+    return {
+      notFound: true,
+    };
   }
+
+  // JSON serializable data
 
   return {
     props: { user, posts },
