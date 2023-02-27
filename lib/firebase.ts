@@ -21,6 +21,8 @@ export const auth = firebase.auth() as any;
 export const db = firebase.firestore();
 export const storage = firebase.storage();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+export const fromMillis = firebase.firestore.Timestamp.fromMillis;
+export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
 
 export async function getUserWithUsername(username: string) {
   const usersRef = db.collection("users");
@@ -38,5 +40,3 @@ export function postToJSON(doc: any) {
     updatedAt: data?.updatedAt.toMillis(),
   };
 }
-
-export const fromMillis = firebase.firestore.Timestamp.fromMillis;
