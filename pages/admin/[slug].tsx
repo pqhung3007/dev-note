@@ -63,8 +63,19 @@ function PostManager() {
   );
 }
 
+interface IFormInput {
+  content: string;
+  published: boolean;
+}
+
 function PostForm({ defaultValues, postRef, preview }) {
-  const { register, handleSubmit, reset, watch } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors, isValid, isDirty },
+  } = useForm<IFormInput>({
     defaultValues,
     mode: "onChange",
   });
@@ -91,14 +102,25 @@ function PostForm({ defaultValues, postRef, preview }) {
 
       <div>
         {/* https://stackoverflow.com/questions/67791756/react-hook-form-error-type-useformregisterformdata-is-not-assignable-to-ty */}
-        <textarea name="content" {...register("content")}></textarea>
+        <textarea
+          name="content"
+          {...register("content", {
+            minLength: { value: 10, message: "Content too short" },
+            required: { value: true, message: "Field cannot be empty" },
+          })}
+        ></textarea>
+        {errors.content && <p>{errors.content.message}</p>}
 
         <fieldset>
           <input name="published" type="checkbox" {...register("published")} />
           <label>Published</label>
         </fieldset>
 
-        <button type="submit" className="text-3xl text-sky-500">
+        <button
+          type="submit"
+          className="text-3xl text-sky-500"
+          disabled={!isDirty || !isValid}
+        >
           Save Changes
         </button>
       </div>
