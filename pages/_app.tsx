@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import { Toaster } from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import { UserContext } from "../lib/context";
 import { useUserData } from "../hooks/useUserData";
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }) {
       <>
         <Navbar />
         <Component {...pageProps} />
+        <Toaster />
       </>
     </UserContext.Provider>
   );

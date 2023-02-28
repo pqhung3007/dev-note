@@ -3,6 +3,7 @@ import { useState } from "react";
 import * as firebase from "firebase/firebase-firestore";
 import "firebase/auth";
 import "firebase/firestore";
+import { toast } from "react-hot-toast";
 
 import AuthenticationCheck from "../../components/AuthenticationCheck";
 import { db, auth } from "../../lib/firebase";
@@ -76,6 +77,8 @@ function PostForm({ defaultValues, postRef, preview }) {
     });
 
     reset({ content, published });
+
+    toast.success("Post updated successfully!");
   };
 
   return (
