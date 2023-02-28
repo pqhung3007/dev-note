@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import ReactMarkdown from "react-markdown";
 import { serverTimestamp } from "firebase/firestore";
+import ImageUploader from "../../components/ImageUploader";
 
 export default function AdminPostEdit() {
   return (
@@ -99,6 +100,8 @@ function PostForm({ defaultValues, postRef, preview }) {
           <ReactMarkdown>{watch("content")}</ReactMarkdown>
         </div>
       )}
+
+      <ImageUploader />
 
       <div>
         {/* https://stackoverflow.com/questions/67791756/react-hook-form-error-type-useformregisterformdata-is-not-assignable-to-ty */}

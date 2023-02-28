@@ -23,6 +23,8 @@ export const storage = firebase.storage();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 export const fromMillis = firebase.firestore.Timestamp.fromMillis;
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
+// track the uploading progress
+export const stateChanged = firebase.storage.TaskEvent.STATE_CHANGED;
 
 export async function getUserWithUsername(username: string) {
   const usersRef = db.collection("users");
